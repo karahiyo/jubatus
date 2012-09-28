@@ -27,9 +27,13 @@ namespace storage{
 class storage_base;
 }
 
+namespace common {
+class config;
+}
+
 class classifier_factory {
 public:
-  static classifier_base* create_classifier(const std::string& name, storage::storage_base* storage);
+  static classifier_base* create_classifier(const common::config& conf, storage::storage_base* storage);
 };
 
 }

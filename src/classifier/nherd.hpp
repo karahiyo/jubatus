@@ -21,14 +21,24 @@
 
 namespace jubatus{
 
+struct NHERD_config {
+  float update_weight;
+
+  template <class Ar>
+  void serialize(Ar& ar) {
+    ar & MEMBER(update_weight);
+  }
+};
+
 class NHERD : public classifier_base{
 public:
-  NHERD(storage::storage_base* storage); 
+  NHERD(storage::storage_base* storage, const NHERD_config& conf);
   void train(const sfv_t& fv, const std::string& label);
   std::string name() const;
 private:
   void update(const sfv_t& sfv, float margin, float variance, 
-	      const std::string& pos_label, const std::string& neg_label);
+              const std::string& pos_label, const std::string& neg_label);
+  float C_;
 };
 
 }

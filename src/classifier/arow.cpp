@@ -24,7 +24,8 @@ using namespace std;
 
 namespace jubatus{
 
-AROW::AROW(storage::storage_base* storage): classifier_base(storage) {
+AROW::AROW(storage::storage_base* storage, const AROW_config& conf)
+    : classifier_base(storage), C_(conf.update_weight) {
   classifier_base::use_covars_ = true;
 }
 

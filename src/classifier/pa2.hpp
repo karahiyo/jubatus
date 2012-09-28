@@ -21,13 +21,23 @@
 
 namespace jubatus{
 
+struct PA2_config {
+  float update_weight;
+
+  template <class Ar>
+  void serialize(Ar& ar) {
+    ar & MEMBER(update_weight);
+  }
+};
+
 class PA2 : public classifier_base {
 public:
-  PA2(storage::storage_base* storage);
+  PA2(storage::storage_base* storage, const PA2_config& conf);
 
   void train(const sfv_t& sfv, const std::string& label);
   std::string name() const;
 private:
+  float C_;
 };
 
 }

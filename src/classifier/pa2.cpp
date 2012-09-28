@@ -22,7 +22,11 @@ using namespace std;
 
 namespace jubatus{
 
-PA2::PA2(storage::storage_base* storage) : classifier_base(storage){
+PA2::PA2(storage::storage_base* storage,
+         const PA2_config& conf)
+    : classifier_base(storage),
+      C_(conf.update_weight)
+{
 }
 
 void PA2::train(const sfv_t& sfv, const string& label){

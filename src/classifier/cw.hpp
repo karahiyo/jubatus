@@ -22,13 +22,23 @@
 
 namespace jubatus{
 
+struct CW_config {
+  float update_weight;
+
+  template <class Ar>
+  void serialize(Ar& ar) {
+    ar & MEMBER(update_weight);
+  }
+};
+
 class CW : public classifier_base {
 public:
-  CW(storage::storage_base* storage);
+  CW(storage::storage_base* storage, const CW_config& conf);
   void train(const sfv_t& fv, const std::string& label);
   std::string name() const;
 private:
   void update(const sfv_t& fv, float step_weigth, const std::string& pos_label, const std::string& neg_label);
+  float C_;
 };
 
 }

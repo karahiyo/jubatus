@@ -24,7 +24,8 @@ using namespace std;
 
 namespace jubatus{
 
-CW::CW (storage::storage_base* storage) : classifier_base(storage) 
+CW::CW (storage::storage_base* storage, const CW_config& conf)
+    : classifier_base(storage), C_(conf.update_weight)
 {
   classifier_base::use_covars_ = true;
 }

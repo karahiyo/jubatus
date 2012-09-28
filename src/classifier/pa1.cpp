@@ -23,7 +23,10 @@ using namespace std;
 
 namespace jubatus{
 
-PA1::PA1(storage::storage_base* storage) : classifier_base(storage) 
+PA1::PA1(storage::storage_base* storage,
+         const PA1_config& conf)
+    : classifier_base(storage),
+      C_(conf.max_update_ratio)
 {
 }
 

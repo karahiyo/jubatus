@@ -20,14 +20,26 @@
 
 #include "classifier_base.hpp"
 
+#include <pficommon/data/serialization.h>
+
 namespace jubatus{
+
+struct PA1_config {
+  float max_update_ratio;
+
+  template <class Ar>
+  void serialize(Ar& ar) {
+    ar & MEMBER(max_update_ratio);
+  }
+};
 
 class PA1 : public classifier_base {
 public:
-  PA1(storage::storage_base* storage);
+  PA1(storage::storage_base* storage, const PA1_config& conf);
   void train(const sfv_t& fv, const std::string& label);
   std::string name() const;
 private:
+  float C_;
 };
 
 }

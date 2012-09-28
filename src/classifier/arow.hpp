@@ -21,13 +21,23 @@
 
 namespace jubatus{
 
+struct AROW_config {
+  float update_weight;
+
+  template <class Ar>
+  void serialize(Ar& ar) {
+    ar & MEMBER(update_weight);
+  }
+};
+
 class AROW : public classifier_base {
 public:
-  AROW(storage::storage_base* stroage);
+  AROW(storage::storage_base* stroage, const AROW_config& conf);
   void train(const sfv_t& fv, const std::string& label);
   std::string name() const;
 private:
   void update(const sfv_t& fv, float alpha, float beta, const std::string& pos_label, const std::string& neg_label);
+  float C_;
 };
 
 }

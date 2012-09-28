@@ -18,6 +18,7 @@
 #include "recommender_factory.hpp"
 #include "recommender.hpp"
 #include "../common/exception.hpp"
+#include "../common/config.hpp"
 #include "../storage/norm_factory.hpp"
 
 using namespace std;
@@ -25,7 +26,8 @@ using namespace std;
 namespace jubatus {
 namespace recommender {
 
-recommender_base* create_recommender(const string& name){
+recommender_base* create_recommender(const common::config& conf){
+  string name = conf["name"].as<string>();
   if (name == "inverted_index"){
     return new inverted_index;
   } else if (name == "minhash"){

@@ -18,26 +18,28 @@
 #include "classifier.hpp"
 #include "classifier_factory.hpp"
 #include "../common/exception.hpp"
+#include "../common/config.hpp"
 
 using namespace std;
 
 namespace jubatus {
 
-classifier_base* classifier_factory::create_classifier(const std::string& name, storage::storage_base* storage) {
+classifier_base* classifier_factory::create_classifier(const common::config& conf, storage::storage_base* storage) {
+  string name = conf["name"].as<string>();
   if (name == "perceptron"){
-    return static_cast<classifier_base*>(new perceptron(storage));
+    return new perceptron(storage);
   } else if (name == "PA"){
-    return static_cast<classifier_base*>(new PA(storage));
+    return new PA(storage);
   } else if (name == "PA1"){
-    return static_cast<classifier_base*>(new PA1(storage));
+    return new PA1(storage, conf.as<PA1_config>());
   } else if (name == "PA2"){
-    return static_cast<classifier_base*>(new PA2(storage));
+    return new PA2(storage, conf.as<PA2_config>());
   } else if (name == "CW"){
-    return static_cast<classifier_base*>(new CW(storage));
+    return new CW(storage, conf.as<CW_config>());
   } else if (name == "AROW"){
-    return static_cast<classifier_base*>(new AROW(storage));
+    return new AROW(storage, conf.as<AROW_config>());
   } else if (name == "NHERD"){
-    return static_cast<classifier_base*>(new NHERD(storage));
+    return new NHERD(storage, conf.as<NHERD_config>());
   } else {
     throw JUBATUS_EXCEPTION(unsupported_method(name));
   }

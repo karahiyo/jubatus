@@ -26,6 +26,7 @@
 #include "../common/util.hpp"
 #include "../common/vector_util.hpp"
 #include "../common/shared_ptr.hpp"
+#include "../common/config.hpp"
 
 #include <glog/logging.h>
 
@@ -71,8 +72,9 @@ int classifier_serv::set_config(config_data config) {
 
   wm_.wm_ = common::cshared_ptr<fv_converter::weight_manager>(new weight_manager);
   wm_.set_model(wm_.wm_);
-  
-  clsfer_.classifier_.reset(classifier_factory::create_classifier(config.method, clsfer_.get_model().get()));
+
+  pfi::text::json::json js = pfi::lang::lexical_cast<pfi::text::json::json>(config.method);
+  clsfer_.classifier_.reset(classifier_factory::create_classifier(common::config(js), clsfer_.get_model().get()));
 
   // FIXME: switch the function when set_config is done
   // because mixing method differs btwn PA, CW, etc...

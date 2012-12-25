@@ -312,11 +312,10 @@ bool graph_serv::update_index() {
 }
 
 bool graph_serv::clear() {
-  LOG(INFO) << __func__;
   if (g_.get_model()) {
     g_.get_model()->clear();
   }
-  LOG(INFO) << "model cleared:" << argv().name;
+  LOG(INFO) << "model cleared: " << argv().name;
   return true;
 }
 
